@@ -1,82 +1,47 @@
-import styled from "styled-components";
+// import styled from "styled-components";
+// eslint-disable-next-line no-unused-vars
+import React from 'react';
 import { Link } from "react-router-dom";
+import { formatNumber } from "../utils/helperFunction"
 
-const Container = styled.div`
-  width: ${(props) => props.type !== "sm" && "343px"};
-  margin-bottom: ${(props) => (props.type == "sm" ? "10px" : "45px")};
-  display: ${(props) => props.type == "sm" && "flex"};
-  gap: 10px;
-  cursor: pointer;
-`;
-
-const Image = styled.img`
-  width: 100%;
-  /* height: 193px; */
-  height: ${(props) => (props.type == "sm" ? "120px" : "193px")};
-  background-color: #999;
-  border-radius: 12px;
-`;
-
-const Details = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: ${(props) => props.type == "sm" && "center"};
-  gap: 12px;
-  margin-top: ${(props) => props.type !== "sm" && "12px"};
-`;
-
-const ChannelImage = styled.img`
-  width: 36x;
-  height: 36px;
-  border-radius: 50%;
-  background-color: #999;
-  display: ${(props) => props.type === "sm" && "none"};
-`;
-
-const Texts = styled.div``;
-
-const Title = styled.h1`
-  font-size: 16px;
-  font-weight: 500;
-  color: ${({ theme }) => theme.text};
-`;
-
-const ChannelName = styled.h2`
-  font-size: 14px;
-  color: ${({ theme }) => theme.textSoft};
-  margin: 7px 0px;
-`;
-
-const Info = styled.div`
-  font-size: 14px;
-  color: ${({ theme }) => theme.textSoft};
-`;
 
 // eslint-disable-next-line react/prop-types
-const Cart = ({ type }) => {
-  return (
-    <Link to="/video/test" style={{ textDecoration: "none" }}>
-      <Container type={type}>
-        <Image
-          type={type}
-          src="https://i.ytimg.com/vi/P8P_S1Fjl_Q/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBapGzIF3a4eZIAoKo02_8oqoPLvg"
-        />
-        <Details type={type}>
-          <ChannelImage
-            src="https://yt3.ggpht.com/j01juFvKwHnKHdgcklpPKLkfNBuGbGJKLBwXVhbN_5LeCU3S9bTsHBL-MKPRQCjpZpfPJ_dJ=s68-c-k-c0x00ffffff-no-rj"
-            alt="img"
-            type={type}
-          />
+const Cart = ({ cardData, type }) => {
 
-          <Texts>
-            <Title>To create a production build</Title>
-            <ChannelName>Carry Minati</ChannelName>
-            <Info>660,908 views - 1 day ago</Info>
-          </Texts>
-        </Details>
-      </Container>
+  return (
+    <Link to={`/video/${cardData?.id}`} style={{ textDecoration: "none" }}>
+      {/* container */}
+      <div className={`${type === "sm" ? "w-full flex mb-5" : "w-80"} cursor-pointer`}>
+
+        {/* card Image */}
+        <img
+          className={`${type === "sm" ? "w-48 h-24" : "w-full h-48"} bg-[#999] rounded-xl`}
+          src={cardData?.snippet?.thumbnails?.medium?.url}
+        />
+
+        {/* details */}
+        <div className={`w-full flex gap-3 ${type === "sm" ? "mt-0 pl-2" : "mt-3"} `}>
+          {/* channel Image */}
+          {
+            type !== "sm" ?
+              <img
+                className={`w-9 h-9 rounded-full bg-[#999]`}
+                src="https://yt3.ggpht.com/j01juFvKwHnKHdgcklpPKLkfNBuGbGJKLBwXVhbN_5LeCU3S9bTsHBL-MKPRQCjpZpfPJ_dJ=s68-c-k-c0x00ffffff-no-rj"
+                alt="img"
+              /> : ""
+          }
+
+          {/* channel details */}
+          <div className=''>
+            <h1 className='text-base font-medium dark:text-white'>{(cardData?.snippet?.title).substr(0, 44) + "..."}</h1>
+            <h2 className='text-sm text-[#606060] dark:text-[#aaaaaa] mt-1'>{cardData?.snippet?.channelTitle}</h2>
+            <div className='text-sm text-[#606060] dark:text-[#aaaaaa]'>{formatNumber(cardData?.statistics?.viewCount)} views</div>
+          </div>
+        </div>
+      </div>
     </Link>
   );
 };
 
 export default Cart;
+

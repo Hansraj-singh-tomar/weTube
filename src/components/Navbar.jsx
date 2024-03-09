@@ -1,78 +1,110 @@
-import styled from "styled-components";
+// import styled from "styled-components";
+// eslint-disable-next-line no-unused-vars
+import React, { useEffect, useState } from 'react';
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { Link } from "react-router-dom";
-
-const Container = styled.div`
-  position: sticky;
-  top: 0;
-  background-color: ${({ theme }) => theme.bgLighter};
-  color: ${({ theme }) => theme.text};
-  height: 56px;
-`;
-
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  height: 100%;
-  position: relative;
-  padding: 0px 20px;
-`;
-
-const Search = styled.div`
-  width: 40%;
-  position: absolute; // position: absolute dene par iski width: 1005 vo jati hai for that we are using width: 40%
-  left: 0px;
-  right: 0px;
-  margin: auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-`;
-
-const Input = styled.input`
-  border: none;
-  background-color: transparent; // dark mode me hame input ka bg-color white show ho rha tha isliye hamne isliye hame ye property use ki hai
-  outline: none;
-  color: ${({ theme }) => theme.text};
-`;
-
-const Button = styled.button`
-  padding: 5px 15px;
-  background-color: transparent;
-  border: 1px solid #3ea6ff;
-  color: #3ea6ff;
-  border-radius: 3px;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  cursor: pointer;
-  margin-top: 10px;
-`;
+import MenuIcon from '@mui/icons-material/Menu';
+import Youtube from "../assets/youtube.png";
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleMenu } from "../Redux/toggleSlice";
+import { getSearchSuggestionAsync } from "../Redux/youtubeDataSlice";
+// import { cacheResults } from '../Redux/searchSlice';
 
 const Navbar = () => {
-  return (
-    <Container>
-      <Wrapper>
-        <Search>
-          <Input placeholder="Search" />
-          <SearchOutlinedIcon />
-        </Search>
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
-        <Link to="/signin" style={{ textDecoration: "none" }}>
-          <Button>
-            <AccountCircleOutlinedIcon />
-            SIGN IN
-          </Button>
+  let suggestions = useSelector((state) => state?.data?.searchSuggestionsData);
+  // console.log("suggestion", suggestions);
+
+  const searchCache = useSelector((state) => state.search)
+  // console.log("searchCache", searchCache);
+
+  const dispatch = useDispatch();
+
+  function toogleMenuHandler() {
+    dispatch(toggleMenu());
+  }
+
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      if (searchCache[searchQuery]) {
+        suggestions = searchCache[searchQuery]
+      } else {
+        dispatch(getSearchSuggestionAsync(searchQuery))
+        // dispatch(cacheResults({ [searchQuery]: suggestions }))
+      }
+    }, 300)
+    return () => clearTimeout(timer)
+  }, [searchQuery])
+
+
+  return (
+    <div className='w-[97%] h-14 m-auto flex justify-between items-center'>
+
+      {/* logo */}
+      <div className='flex items-center'>
+        <div className='hover:bg-[#f5f5f5] dark:hover:bg-[#373737] rounded-full' onClick={() => toogleMenuHandler()}>
+          <div className='py-2 px-2 cursor-pointer'>
+            <MenuIcon />
+          </div>
+        </div>
+        <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+          <div className='flex ml-4'>
+            <img src={Youtube} alt="logo" className='h-6' />
+            <span className='ml-1'>YoursTube</span>
+          </div>
         </Link>
-      </Wrapper>
-    </Container>
+      </div>
+
+      {/* search bar */}
+      <div className='w-2/5'>
+        <div className='w-full p-1 border-2 border-[#ccc] border-solid rounded-lg flex'>
+          <input
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onFocus={() => setShowSuggestions(true)}
+            onBlur={() => setShowSuggestions(false)}
+            className='w-full bg-transparent border-none outline-none dark:text-white'
+            placeholder="Search"
+          />
+          <SearchOutlinedIcon className='dark:text-white' />
+        </div>
+        {
+          showSuggestions && (
+            <div className='fixed z-10 w-[39%] h-[70%] overflow-x-auto bg-[#212121] mt-2 rounded-lg'>
+              <ul className='my-4'>
+                {
+                  suggestions?.map((item) => {
+                    return (
+                      <Link to={"/results"} key={item?.id}>
+                        <li key={item?.id} className='w-full hover:bg-[#383838] px-4 py-2 flex text-sm cursor-pointer'>
+                          <SearchOutlinedIcon className='dark:text-[#D5D5D5]' />
+                          <p className='ml-2'>{item?.snippet?.title}</p>
+                        </li>
+                      </Link>
+                    )
+                  })
+                }
+              </ul>
+            </div>
+          )
+        }
+      </div>
+
+      {/* sign in btn */}
+      <Link to={"/signin"}>
+        <div className='px-4 py-1 border-2 border-[#3ea6ff] border-solid text-[#3ea6ff] rounded-sm font-medium cursor-pointer bg-transparent'>
+          <AccountCircleOutlinedIcon />
+          <span className='ml-2'>SIGN IN</span>
+        </div>
+      </Link>
+    </div>
   );
 };
 
 export default Navbar;
+
+
+

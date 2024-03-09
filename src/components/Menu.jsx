@@ -1,8 +1,8 @@
-import styled from "styled-components";
-
+// import styled from "styled-components";
+// eslint-disable-next-line no-unused-vars
+import React, { useState } from "react"
 import { Link } from "react-router-dom";
 
-import Youtube from "../assets/youtube.png";
 
 // Menu icons
 import HomeIcon from "@mui/icons-material/Home";
@@ -21,196 +21,135 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import FlagOutlinedIcon from "@mui/icons-material/FlagOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import SettingsBrightnessOutlinedIcon from "@mui/icons-material/SettingsBrightnessOutlined";
+import { useDispatch } from "react-redux";
+import { toggleTheme } from "../Redux/toggleSlice"
 
-const Container = styled.div`
-  flex: 1;
-  background-color: ${({ theme }) => theme.bgLighter};
-  height: 100%;
-  color: ${({ theme }) => theme.text};
-  font-size: 14px;
-  position: sticky;
-  top: 0;
-  /* overflow-y: auto; */
-`;
+const hrLine = "my-4 border-2 border-solid border-[#f5f5f5] dark:border-[#373737]";
 
-const Wrapper = styled.div`
-  padding: 18px 26px;
-`;
+const ItemWrapper = "hover:bg-[#f5f5f5] dark:hover:bg-[#373737] rounded-lg"
 
-const Logo = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-weight: bold;
-  margin-bottom: 25px;
-`;
-
-const Img = styled.img`
-  height: 25px;
-`;
-
-// hover effect ke liye ham ItemWrapper ka use kar rhe hai
-const ItemWrapper = styled.div`
-  &:hover {
-    background-color: ${({ theme }) => theme.soft};
-    border-radius: 8px;
-  }
-`;
-
-const Item = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  cursor: pointer;
-  padding: 7px 9px;
-`;
-
-const Hr = styled.hr`
-  margin: 15px 0px;
-  border: 0.5px solid ${({ theme }) => theme.soft};
-`;
-
-const Login = styled.div``;
-
-const Button = styled.button`
-  padding: 5px 15px;
-  background-color: transparent;
-  border: 1px solid #3ea6ff;
-  color: #3ea6ff;
-  border-radius: 3px;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  cursor: pointer;
-  margin-top: 10px;
-`;
-
-const Title = styled.h2`
-  font-size: 14px;
-  font-weight: 500;
-  color: #aaaaaa;
-  margin-bottom: 20px;
-`;
+const Item = "py-2 px-2 flex items-center gap-5 cursor-pointer";
 
 // eslint-disable-next-line react/prop-types
-const Menu = ({ darkMode, setDarkMode }) => {
+const Menu = ({ darkMode }) => {
+  const dispatch = useDispatch();
+  function handleTheme() {
+    dispatch(toggleTheme());
+  }
+
   return (
-    <Container>
-      <Wrapper>
-        <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-          <Logo>
-            <Img src={Youtube} alt="logo" />
-            YoursTube
-          </Logo>
+    <div>
+      <div className="px-6 py-3 mb-12">
+        <Link to="/">
+          <div className={ItemWrapper}>
+            <div className={Item}>
+              <HomeIcon />
+              Home
+            </div>
+          </div>
         </Link>
-        <ItemWrapper>
-          <Item>
-            <HomeIcon />
-            Home
-          </Item>
-        </ItemWrapper>
-        <ItemWrapper>
-          <Item>
+        <div className={ItemWrapper}>
+          <div className={Item}>
             <ExploreOutlinedIcon />
             Explore
-          </Item>
-        </ItemWrapper>
-        <ItemWrapper>
-          <Item>
+          </div>
+        </div>
+        <div className={ItemWrapper}>
+          <div className={Item}>
             <SubscriptionsOutlinedIcon />
             Subscriptions
-          </Item>
-        </ItemWrapper>
-        <Hr />
-        <ItemWrapper>
-          <Item>
+          </div>
+        </div>
+        <hr className={hrLine} />
+        <div className={ItemWrapper}>
+          <div className={Item}>
             <VideoLibraryOutlinedIcon />
             Library
-          </Item>
-        </ItemWrapper>
-        <ItemWrapper>
-          <Item>
+          </div>
+        </div>
+        <div className={ItemWrapper}>
+          <div className={Item}>
             <HistoryOutlinedIcon />
             History
-          </Item>
-        </ItemWrapper>
-        <Hr />
-        <Login>
+          </div>
+        </div>
+        <hr className={hrLine} />
+        <div>
           Sign in to like videos, comment, and subscribe.
           <Link to="/signin" style={{ textDecoration: "none" }}>
-            <Button>
+            <button className="mt-2 py-1 px-4 bg-transparent border-2 border-solid border-[#3ea6ff] text-[#3ea6ff] rounded font-medium flex items-center cursor-pointer">
               <AccountCircleOutlinedIcon />
               SIGN IN
-            </Button>
+            </button>
           </Link>
-        </Login>
-        <Hr />
-        <Title>BEST OF YOURSTUBE</Title>
-        <ItemWrapper>
-          <Item>
+        </div>
+        <hr className={hrLine} />
+        <h2 className="text-sm mb-5 font-medium text-[#606060] dark:text-[#aaaaaa]">BEST OF YOURSTUBE</h2>
+        <div className={ItemWrapper}>
+          <div className={Item}>
             <LibraryMusicOutlinedIcon />
             Music
-          </Item>
-        </ItemWrapper>
-        <ItemWrapper>
-          <Item>
+          </div>
+        </div>
+        <div className={ItemWrapper}>
+          <div className={Item}>
             <SportsBasketballOutlinedIcon />
             Sports
-          </Item>
-        </ItemWrapper>
-        <ItemWrapper>
-          <Item>
+          </div>
+        </div>
+        <div className={ItemWrapper}>
+          <div className={Item}>
             <SportsEsportsOutlinedIcon />
             Gaming
-          </Item>
-        </ItemWrapper>
-        <ItemWrapper>
-          <Item>
+          </div>
+        </div>
+        <div className={ItemWrapper}>
+          <div className={Item}>
             <MovieOutlinedIcon />
             Movies
-          </Item>
-        </ItemWrapper>
-        <ItemWrapper>
-          <Item>
+          </div>
+        </div>
+        <div className={ItemWrapper}>
+          <div className={Item}>
             <ArticleOutlinedIcon />
             News
-          </Item>
-        </ItemWrapper>
-        <ItemWrapper>
-          <Item>
+          </div>
+        </div>
+        <div className={ItemWrapper}>
+          <div className={Item}>
             <LiveTvOutlinedIcon />
             Live
-          </Item>
-        </ItemWrapper>
-        <Hr />
-        <ItemWrapper>
-          <Item>
+          </div>
+        </div>
+        <hr className={hrLine} />
+        <div className={ItemWrapper}>
+          <div className={Item}>
             <SettingsOutlinedIcon />
             Settings
-          </Item>
-        </ItemWrapper>
-        <ItemWrapper>
-          <Item>
+          </div>
+        </div>
+        <div className={ItemWrapper}>
+          <div className={Item}>
             <FlagOutlinedIcon />
             Report
-          </Item>
-        </ItemWrapper>
-        <ItemWrapper>
-          <Item>
+          </div>
+        </div>
+        <div className={ItemWrapper}>
+          <div className={Item}>
             <HelpOutlineOutlinedIcon />
             Help
-          </Item>
-        </ItemWrapper>
-        <ItemWrapper>
-          <Item onClick={() => setDarkMode(!darkMode)}>
+          </div>
+        </div>
+        <div className={ItemWrapper}>
+          <div className={Item} onClick={handleTheme}>
             <SettingsBrightnessOutlinedIcon />
             {darkMode ? "LightMode" : "DarkMode"}
-          </Item>
-        </ItemWrapper>
-      </Wrapper>
-    </Container>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
 export default Menu;
+
