@@ -11,7 +11,7 @@ const Cart = ({ cardData, type }) => {
   return (
     <Link to={`/video/${cardData?.id}`} style={{ textDecoration: "none" }}>
       {/* container */}
-      <div className={`${type === "sm" ? "w-full flex mb-5 bg-red-400" : "w-80"} ${type === "md" && "w-full flex mb-5 bg-red-400 px-4"} cursor-pointer`}>
+      <div className={`${type === "sm" ? "w-full flex mb-5" : "w-80"} ${type === "md" && "w-full flex mb-5 bg-red-400 px-4"} cursor-pointer`}>
 
         {/* card Image */}
         <img
