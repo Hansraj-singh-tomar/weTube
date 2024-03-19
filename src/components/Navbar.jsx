@@ -39,6 +39,9 @@ const Navbar = () => {
     return () => clearTimeout(timer)
   }, [searchQuery])
 
+  function handleSearchList() {
+    setShowSuggestions(false)
+  }
 
   return (
     <div className='w-[97%] h-14 m-auto flex justify-between items-center'>
@@ -65,21 +68,21 @@ const Navbar = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onFocus={() => setShowSuggestions(true)}
-            onBlur={() => setShowSuggestions(false)}
+            // onBlur={() => setShowSuggestions(false)}
             className='w-full bg-transparent border-none outline-none dark:text-white'
             placeholder="Search"
           />
           <SearchOutlinedIcon className='dark:text-white' />
         </div>
         {
-          showSuggestions && (
+          showSuggestions && suggestions.length > 0 && (
             <div className='fixed z-10 w-[39%] h-[70%] overflow-x-auto bg-[#212121] mt-2 rounded-lg'>
               <ul className='my-4'>
                 {
                   suggestions?.map((item) => {
                     return (
-                      <Link to={"/results"} key={item?.id}>
-                        <li key={item?.id} className='w-full hover:bg-[#383838] px-4 py-2 flex text-sm cursor-pointer'>
+                      <Link to="results" key={item?.id}>
+                        <li onClick={handleSearchList} className='w-full hover:bg-[#383838] px-4 py-2 flex text-sm cursor-pointer'>
                           <SearchOutlinedIcon className='dark:text-[#D5D5D5]' />
                           <p className='ml-2'>{item?.snippet?.title}</p>
                         </li>

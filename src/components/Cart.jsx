@@ -11,11 +11,11 @@ const Cart = ({ cardData, type }) => {
   return (
     <Link to={`/video/${cardData?.id}`} style={{ textDecoration: "none" }}>
       {/* container */}
-      <div className={`${type === "sm" ? "w-full flex mb-5" : "w-80"} cursor-pointer`}>
+      <div className={`${type === "sm" ? "w-full flex mb-5 bg-red-400" : "w-80"} ${type === "md" && "w-full flex mb-5 bg-red-400 px-4"} cursor-pointer`}>
 
         {/* card Image */}
         <img
-          className={`${type === "sm" ? "w-48 h-24" : "w-full h-48"} bg-[#999] rounded-xl`}
+          className={`${type === "sm" ? "w-48 h-24" : "w-full h-48"} ${type === "md" && "w-72 h-60"} bg-[#999] rounded-xl`}
           src={cardData?.snippet?.thumbnails?.medium?.url}
         />
 

@@ -1,9 +1,17 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+import Cart from './Cart'
 
 const SuggestionResults = () => {
-    console.log("function called");
+    const items = useSelector((state) => state?.data?.items)
     return (
-        <div>SuggestionResults</div>
+        <div>
+            {
+                items.map((item) => {
+                    return <Cart type="md" key={item.id} cardData={item} />
+                })
+            }
+        </div>
     )
 }
 
