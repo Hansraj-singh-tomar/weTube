@@ -1,12 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { fetchYoutubeData, fetchSingleData, fetchSearchSuggestionsData, fetchVideoCategoriesData } from './youtubeDataApi'
-import { cacheResults } from './searchSlice'
+import { fetchYoutubeData, fetchSingleData, fetchSearchSuggestionsData, fetchVideoCategoriesData, fetchSearchQuery } from './youtubeDataApi'
+import { cacheQueryResults, cacheSearchSuggestions } from './searchSlice'
 
 const initialState = {
     status: 'idle',
     youtubeData: [],
     items: [],
     singleData: {},
+    searchQueryData: [],
     searchSuggestionsData: [],
     videoCategoriesData: [],
 }
@@ -23,13 +24,20 @@ export const getSingleDataAsync = createAsyncThunk('youtube/fetchSingleData', as
 
 export const getSearchSuggestionAsync = createAsyncThunk('youtube/fetchSearchSuggestionsData', async (searchQuery, { dispatch }) => {
     const searchSuggestionsData = await fetchSearchSuggestionsData(searchQuery);
-    dispatch(cacheResults({ [searchQuery]: searchSuggestionsData.slice(0, 10) }))
-    return searchSuggestionsData.slice(0, 10);
+    dispatch(cacheSearchSuggestions({ [searchQuery]: searchSuggestionsData }))
+    return searchSuggestionsData;
+})
+
+export const getSearchQueryAsync = createAsyncThunk('youtube/fetchSearchQuery', async (searchQuery, { dispatch }) => {
+    const searchQueryData = await fetchSearchQuery(searchQuery);
+    dispatch(cacheQueryResults({ [searchQuery]: searchQueryData.slice(0, 10) }))
+    return searchQueryData.slice(0, 10);
 })
 
 export const getVideoCategoriesAsync = createAsyncThunk('youtube/fetchVideoCategoriesData', async () => {
     const videoCategoriesData = await fetchVideoCategoriesData();
     return videoCategoriesData.slice(0, 8);
+    // return videoCategoriesData;
 })
 
 
@@ -37,17 +45,6 @@ const youtubeDataSlice = createSlice({
     name: 'youtube',
     initialState,
     reducers: {
-        // todoAdded(state, action) {
-        //     state.push({
-        //         id: action.payload.id,
-        //         text: action.payload.text,
-        //         completed: false,
-        //     })
-        // },
-        // todoToggled(state, action) {
-        //     const todo = state.find((todo) => todo.id === action.payload)
-        //     todo.completed = !todo.completed
-        // },
     },
     extraReducers: (builder) => {
         builder
@@ -60,6 +57,7 @@ const youtubeDataSlice = createSlice({
                 state.items = action.payload.items;
             })
 
+
             .addCase(getSingleDataAsync.pending, (state) => {
                 state.status = 'loading';
             })
@@ -68,6 +66,7 @@ const youtubeDataSlice = createSlice({
                 state.singleData = action.payload.items;
             })
 
+
             .addCase(getSearchSuggestionAsync.pending, (state) => {
                 state.status = 'loading';
             })
@@ -75,6 +74,16 @@ const youtubeDataSlice = createSlice({
                 state.status = 'idle';
                 state.searchSuggestionsData = action.payload;
             })
+
+
+            .addCase(getSearchQueryAsync.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(getSearchQueryAsync.fulfilled, (state, action) => {
+                state.status = 'idle';
+                state.searchQueryData = action.payload;
+            })
+
 
             .addCase(getVideoCategoriesAsync.pending, (state) => {
                 state.status = 'loading';
@@ -87,5 +96,4 @@ const youtubeDataSlice = createSlice({
 })
 
 
-// export const { todoAdded, todoToggled } = youtubeDataSlice.actions
 export default youtubeDataSlice.reducer

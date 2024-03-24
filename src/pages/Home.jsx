@@ -1,37 +1,34 @@
-// import styled from "styled-components";
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from 'react';
+
 import Cart from "../components/Cart";
-import { getYoutubeDataAsync, getVideoCategoriesAsync } from '../Redux/youtubeDataSlice';
-import { useDispatch, useSelector } from 'react-redux';
 import ButtonList from '../components/ButtonList';
 
+import { getYoutubeDataAsync, getVideoCategoriesAsync } from '../Redux/youtubeDataSlice';
+import { useDispatch, useSelector } from 'react-redux';
+
+
 const Home = () => {
-  const items = useSelector((state) => state.data.items);
-  // console.log(items);
+  const { items } = useSelector((state) => state.data);
   const [resultsPerPage, setResultsPerPage] = useState(9);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getVideoCategoriesAsync());
+    window.addEventListener('scroll', handleScroll)
+
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [])
 
   useEffect(() => {
+    console.log('home component');
     dispatch(getYoutubeDataAsync(resultsPerPage))
-  }, [dispatch, resultsPerPage])
+  }, [resultsPerPage])
 
-  const scrollToEnd = () => {
-    setResultsPerPage(resultsPerPage + 9);
-  };
-
-  window.onscroll = function () {
-    // check if the page has scrolled to the bottom
-    if (
-      window.innerHeight + document.documentElement.scrollTop ===
-      document.documentElement.offsetHeight
-    ) {
-      scrollToEnd();
+  const handleScroll = () => {
+    if (window.scrollY + window.innerHeight >= document.body.scrollHeight) { // window.scrollY(height of all content which is inside scroll as well) // window.innerHeight(height of content which is visible to us expect which is inside scroll)
+      setResultsPerPage(resultsPerPage + 9);
     }
   };
 
@@ -53,3 +50,7 @@ const Home = () => {
 
 export default Home;
 
+// const { status } = useSelector((state) => state.data)
+// console.log(status);
+
+{/* <Route index element={status === 'idle' ? <Home /> : <ShimmerSimpleGallery card imageHeight={300} caption />} /> */ }

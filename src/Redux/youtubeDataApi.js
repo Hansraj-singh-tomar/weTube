@@ -1,4 +1,3 @@
-
 export function fetchYoutubeData(resultsPerPage) {
     return new Promise(async (resolve, reject) => {
         try {
@@ -26,12 +25,21 @@ export function fetchSingleData(id) {
     })
 }
 
-// const response = await fetch(`http://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=${searchQuery}`)
+
 export function fetchSearchSuggestionsData(searchQuery) {
     return new Promise(async (resolve) => {
         const response = await fetch(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=${searchQuery}&key=${import.meta.env.VITE_YOUTUBE_API_KEY}`)
         const data = await response.json();
         resolve(data?.items)
+    })
+}
+
+
+export function fetchSearchQuery(searchQuery) {
+    return new Promise(async (resolve) => {
+        const response = await fetch(`http://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=${searchQuery}`)
+        const data = await response.json();
+        resolve(data?.[1])
     })
 }
 
