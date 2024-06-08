@@ -7,7 +7,7 @@ const ButtonList = () => {
     const youtubeCategories = useSelector((state) => state?.data?.videoCategoriesData)
     // console.log(youtubeCategories);
     return (
-        <div className='fixed flex flex-wrap bg-white dark:bg-[#0F0F0F] px-2 pt-3 w-full'>
+        <div className='hidden fixed sm:flex flex-wrap bg-white dark:bg-[#0F0F0F] px-2 pt-3 w-full'>
             {/* <div className='w-full overflow-x-scroll transition ease-out duration-400 scroll-smooth'> */}
             {
                 youtubeCategories.map((item) => {

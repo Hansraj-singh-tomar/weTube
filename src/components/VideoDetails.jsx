@@ -18,11 +18,11 @@ const VideoDetails = ({ singleData }) => {
                 {singleData[0]?.snippet?.title}
             </h1>
             {/* details */}
-            <div className='flex items-center justify-between'>
+            <div className='sm:flex items-center justify-between'>
                 {/* info */}
                 <span className='text-[#606060] dark:text-[#aaaaaa]'>{formatNumber(singleData[0]?.statistics?.viewCount)} views • {parsedDate.toDateString()}</span>
                 {/* buttons */}
-                <div className='flex gap-5'>
+                <div className='mt-3 flex gap-5'>
                     <button className={Button}>
                         <ThumbUpOutlinedIcon /> {formatNumber(singleData[0]?.statistics?.likeCount)}
                     </button>

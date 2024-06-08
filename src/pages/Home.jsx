@@ -35,7 +35,7 @@ const Home = () => {
   return (
     <div>
       <ButtonList />
-      <div className='py-20 px-6 grid grid-cols-1 gap-x-6 gap-y-10 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 xl:gap-x-8'>
+      <div className='py-10 sm:py-20 px-6 grid grid-cols-1 gap-x-6 gap-y-10 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 xl:gap-x-8'>
         {
           items?.map((item) => {
             return (

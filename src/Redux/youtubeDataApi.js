@@ -17,7 +17,7 @@ export function fetchSingleData(id) {
         try {
             const response = await fetch(`https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${id}&key=${import.meta.env.VITE_YOUTUBE_API_KEY}`);
             const data = await response.json();
-            // console.log("fetch single data", data);
+            console.log("fetch single data", data);
             resolve({ data });
         } catch (error) {
             reject(error)

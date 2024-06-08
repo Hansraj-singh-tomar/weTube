@@ -8,7 +8,7 @@ const ChannelInfo = ({ singleData }) => {
     let descriptionData = `${singleData[0]?.snippet?.description}`.split("\n\n")
     // console.log(str.split("\n\n"));
     return (
-        <div className='flex'>
+        <div className='sm:flex'>
             <div className='flex gap-5'>
                 <img className='w-12 h-12 rounded-full' src="https://yt3.ggpht.com/j01juFvKwHnKHdgcklpPKLkfNBuGbGJKLBwXVhbN_5LeCU3S9bTsHBL-MKPRQCjpZpfPJ_dJ=s68-c-k-c0x00ffffff-no-rj" />
                 {/* channel detail */}

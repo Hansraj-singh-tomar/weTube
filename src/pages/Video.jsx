@@ -31,8 +31,8 @@ const Video = () => {
 
 
   return (
-    <div className='grid sm:grid-cols-12 px-6 py-2'>
-      <div className={`${isMenuOpen ? "col-span-7" : "col-span-8"}`}>
+    <div className='w-full sm:grid sm:grid-cols-12 px-6 py-2'>
+      <div className={`${isMenuOpen ? "sm:col-span-7" : "sm:col-span-8"}`}>
         {/* video Player */}
         <VideoPlayer id={id} />
 

@@ -1,8 +1,10 @@
+// eslint-disable-next-line no-unused-vars
 import React from 'react'
 
+// eslint-disable-next-line react/prop-types
 const VideoPlayer = ({ id }) => {
     return (
-        <div>
+        <div className=''>
             <iframe
                 width="100%"
                 height="435"

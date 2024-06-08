@@ -13,7 +13,7 @@ const SignIn = () => {
 
   return (
     <div className='w-full h-screen flex justify-center items-center flex-col dark:text-white'>
-      <div className='w-[40%] py-5 px-12 bg-[#202020] flex items-center flex-col gap-4 border-[#373737] border-2 border-solid'>
+      <div className='sm:w-[40%] py-5 px-12 bg-[#202020] flex items-center flex-col gap-4 border-[#373737] border-2 border-solid'>
         <h1 className='text-2xl'>{isSignInForm ? "Sign in" : "Sign up"}</h1>
         <h2 className='text-sm'>to continue to WeTube</h2>
         {!isSignInForm && <input ref={name} className={Input} placeholder="username" />}
@@ -22,7 +22,7 @@ const SignIn = () => {
         <button className={Button}>{isSignInForm ? "Sign in" : "Sign up"}</button>
         <p className='cursor-pointer hover:underline' onClick={() => setIsSignInForm(!isSignInForm)}>{isSignInForm ? "New to WeTube? Sign Up Now" : "Already registered? Sign In Now."}</p>
       </div>
-      <div className='w-[40%] flex justify-between mt-2 text-xs text-[#aaaaaa]'>
+      <div className='sm:w-[40%] flex justify-between mt-2 text-xs text-[#aaaaaa]'>
         <p>
           English(USA)
         </p>
