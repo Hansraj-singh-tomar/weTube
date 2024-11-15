@@ -23,7 +23,7 @@ const LiveChat = () => {
 
     return (
         <>
-            <div className='border-[#272727] p-2 border-2 h-[550px] rounded-lg bg-transparent overflow-y-scroll flex flex-col-reverse'>
+            <div id='scrollBehave' className='border-[#272727] p-2 border-2 h-[550px] rounded-lg bg-transparent overflow-y-scroll flex flex-col-reverse'>
                 {
                     chatData.map((el, i) => {
                         return <ChatMessage key={i} name={el.name} message={el.message} />

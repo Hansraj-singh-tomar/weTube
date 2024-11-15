@@ -23,7 +23,7 @@ const App = () => {
 
         <div className='w-full flex justify-center'>
           {isMenuOpen &&
-            <aside className=' fixed top-14 left-0 w-64 dark:bg-[#0F0F0F] dark:text-white max-h-screen overflow-y-auto'>
+            <aside id='scrollBehave' className='fixed top-14 left-0 w-64 dark:bg-[#0F0F0F] dark:text-white max-h-screen overflow-y-auto'>
               <Menu darkMode={darkMode} />
             </aside>
           }

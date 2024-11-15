@@ -5,3 +5,15 @@
 *{
     @apply transition-colors duration-100;
 }
+
+/* This is also working fine  */
+/* #scrollBehave::-webkit-scrollbar{
+    display: none;
+} */
+
+@layer base {
+  #scrollBehave {
+    scrollbar-width: thin !important;
+    scrollbar-color: white black !important;
+  }
+}
